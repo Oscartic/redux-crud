@@ -16,8 +16,8 @@ class Productos extends Component {
         console.log(productos);
         return ( 
             <React.Fragment>
-                <h2 className="test-center my-5">Listado de Productos</h2>
-                <div className="row justify-content-cemter">
+                <h2 className="text-center my-5">Listado de Productos</h2>
+                <div className="row justify-content-center">
                     <div className="col-md-8">
                         <ul>
                             {productos.map(producto => (

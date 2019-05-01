@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 
 // React 
 import { connect } from 'react-redux';
-import { } from '../actions/productosActions';
+import { mostrarProducto, editarProducto } from '../actions/productosActions';
 
 
 class EditarProducto extends Component {
@@ -11,6 +11,19 @@ class EditarProducto extends Component {
         nombre: '',
         precio: '',
         error: false 
+    }
+
+    componentDidMount() {
+        const { id } = this.props.match.params;
+        this.props.mostrarProducto(id);
+    }
+
+    componentWillReceiveProps(nextProps, nextState){
+        const {nombre, precio} = nextProps.producto;
+        this.setState({
+            nombre,
+            precio
+        });
     }
 
     nombreProducto = e => {
@@ -30,14 +43,19 @@ class EditarProducto extends Component {
             return;
         } 
         this.setState({error: false});
+        
+        //tomar el ID
+        const { id } = this.props.match.params;
+        
         // Crear el objeto 
         const infoProducto = {
+            id,
             nombre,
             precio
         }
-        console.warn(infoProducto);
-        // Crear nuevo producto
-        this.props.agregarProducto(infoProducto);
+        // console.warn(infoProducto);
+        // Actualizar producto
+        this.props.editarProducto(infoProducto);
         
         // Redireccionar
         this.props.history.push('/');
@@ -45,7 +63,7 @@ class EditarProducto extends Component {
 
     render() { 
 
-        const { error } = this.state;
+        const { nombre, precio, error } = this.state;
 
         return ( 
             <div className="row justify-content-center mt-5">
@@ -56,14 +74,14 @@ class EditarProducto extends Component {
                             <form onSubmit={this.actualizarProducto}>
                                 <div className="form-group">
                                     <label>Titulo</label>
-                                    <input onChange={this.nombreProducto} type="text" className="form-control" placeholder="Titulo" />
+                                    <input defaultValue={nombre} onChange={this.nombreProducto} type="text" className="form-control" placeholder="Titulo" />
                                 </div>
                                 <div className="form-group">
                                     <label>Precio del Producto</label>
-                                    <input onChange={this.precioProducto} type="text" 
+                                    <input defaultValue={precio} onChange={this.precioProducto} type="text" 
                                     className="form-control" placeholder="Precio" />
                                 </div>
-                                <button type="submit" className="btn btn-primary font-weight-bold text-uppercase d-block w-100">Agregar</button>
+                                <button type="submit" className="btn btn-primary font-weight-bold text-uppercase d-block w-100">Guardar Cambios</button>
                             </form>
                             { error ? <div className="font-weight-bold alert alert-danger text-center mt-4">
                                   Todos los campos son obligatorios!  
@@ -77,5 +95,8 @@ class EditarProducto extends Component {
         );
     }
 }
- 
-export default connect(null, {})(EditarProducto);
+// State 
+const mapStateToProps = state => ({
+    producto: state.productos.producto
+});
+export default connect(mapStateToProps, {mostrarProducto, editarProducto})(EditarProducto);

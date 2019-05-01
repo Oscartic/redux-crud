@@ -2,13 +2,13 @@
   "productos": [
     {
       "id": 2,
-      "nombre": "Pastel 3",
-      "precio": 60
+      "nombre": "Pastel Mayo",
+      "precio": "150"
     },
     {
       "id": 3,
-      "nombre": "Pastel 4",
-      "precio": 30
+      "nombre": "Pastel de Nuez",
+      "precio": "70"
     },
     {
       "nombre": "Pastel de Zanahoria",
@@ -24,6 +24,11 @@
       "nombre": "Rollos de Canela",
       "precio": "2300",
       "id": 6
+    },
+    {
+      "nombre": "Salpicon",
+      "precio": "7780",
+      "id": 7
     }
   ]
 }
